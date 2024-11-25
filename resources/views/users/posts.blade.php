@@ -1,6 +1,8 @@
 <x-layout>
 
-    <h1 class="title">Latest Posts</h1>
+    <h1 class="title">{{ $user->username }}'s Posts ({{ $posts->total() }})</h1>
+
+    {{-- User's posts --}}
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @foreach ($posts as $post)
@@ -11,5 +13,4 @@
     <div>
         {{ $posts->links() }}
     </div>
-
 </x-layout>

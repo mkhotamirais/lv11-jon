@@ -1,19 +1,14 @@
 <x-layout>
-    <h1 class="title">Register</h1>
+    <h1 class="title">Login</h1>
 
     <div class="mx-auto max-w-screen-sm card">
-        <form action="{{ route('register') }}" method="POST">
+        @error('failed')
+            <p class="p-2 rounded text-sm text-red-500 border border-red-500 bg-red-100">{{ $message }}</p>
+        @enderror
+
+        <form action="{{ route('login') }}" method="POST">
             @csrf
 
-            {{-- username --}}
-            <div class="mb-4">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" value="{{ old('username') }}"
-                    class="input @error('username') !ring-red-500 @enderror">
-                @error('username')
-                    <p class="error">{{ $message }}</p>
-                @enderror
-            </div>
             {{-- email --}}
             <div class="mb-4">
                 <label for="email">Email</label>
@@ -32,14 +27,13 @@
                     <p class="error">{{ $message }}</p>
                 @enderror
             </div>
-            {{-- confirm password --}}
-            <div class="mb-4">
-                <label for="password_confirmation">Confirm Password</label>
-                <input type="password" name="password_confirmation" id="password_confirmation"
-                    class="input @error('password') !ring-red-500 @enderror">
+            {{-- remember --}}
+            <div class="mb-4 flex items-center gap-2">
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">remember me</label>
             </div>
             {{-- submit button --}}
-            <button type="submit" class="btn">Register</button>
+            <button type="submit" class="btn">Login</button>
         </form>
     </div>
 
