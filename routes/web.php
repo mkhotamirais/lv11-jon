@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 // 2. menggunakan implement HasMiddleware
 // 3. menggunakan cara berikut yang diterapkan di sini
 
-// Route::view('/', 'posts.index')->name('index');
-Route::redirect('/', '/posts')->name('index');
+Route::view('/', 'posts.index')->name('index');
+// Route::redirect('/', '/posts')->name('index');
 
 Route::resource('posts', PostController::class);
 Route::get('/{user}/posts', [DashboardController::class, 'userPosts'])->name('posts.user');
