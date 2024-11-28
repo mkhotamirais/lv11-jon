@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserSubscribed;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,6 +24,12 @@ class AuthController extends Controller
         $user = User::create($fields);
         // login
         Auth::login($user);
+        // verify email
+        event(new Registered($user));
+        // subscribe
+        if ($request->subscribe) {
+            event(new UserSubscribed($user));
+        }
         // redirect
         return redirect()->route('dashboard');
     }
@@ -51,5 +60,21 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         // return redirect()->route('login');
         return redirect('/');
+    }
+    public function verifyNotice()
+    {
+        return view('auth.verify-email');
+    }
+
+    public function verifyEmail(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+        return redirect()->route('dashboard');
+    }
+
+    public function resendVerifyEmail(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Verification link sent!');
     }
 }

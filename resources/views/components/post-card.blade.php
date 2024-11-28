@@ -1,17 +1,14 @@
 @props(['post', 'full' => false])
 
-<div class="card grid grid-cols-2 gap-4">
+<div class="card grid grid-cols-1 md:grid-cols-2 gap-4">
     {{-- title --}}
-    @if ($post->image)
-        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title ?? 'post image' }}">
-    @else
-        <img src="{{ asset('storage/posts_images/no-image.svg') }}" alt="{{ $post->title ?? 'post image' }}">
-    @endif
+    <img src="{{ $post->image ? asset('storage/' . $post->image) : 'https://placehold.co/600x400/EEE/31343C/png?text=picture' }}"
+        alt="{{ $post->title ?? 'post image' }}" class="object-cover object-center w-full h-full">
 
     <div class="flex flex-col">
 
         <a href="" class="hover:underline self-start">
-            <h2 class="font-bold text-xl">{{ $post->title }}</h2>
+            <h2 class="font-bold text-xl capitalize">{{ $post->title }}</h2>
         </a>
 
         {{-- author and date --}}
@@ -24,7 +21,7 @@
         @if ($full)
             <p>{{ $post->body }}</p>
         @else
-            <p>
+            <p class="text-gray-600">
                 <span>{{ Str::words($post->body, 15) }}</span>
                 <a href="{{ route('posts.show', $post) }}"
                     class="text-blue-500 text-sm font-medium hover:underline">Read More

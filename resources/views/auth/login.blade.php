@@ -2,6 +2,10 @@
     <h1 class="title">Login</h1>
 
     <div class="mx-auto max-w-screen-sm card">
+        @if (session('status'))
+            <x-flash-msg msg="{{ session('status') }}" />
+        @endif
+
         @error('failed')
             <p class="p-2 rounded text-sm text-red-500 border border-red-500 bg-red-100">{{ $message }}</p>
         @enderror
@@ -28,9 +32,13 @@
                 @enderror
             </div>
             {{-- remember --}}
-            <div class="mb-4 flex items-center gap-2">
-                <input type="checkbox" name="remember" id="remember">
-                <label for="remember">remember me</label>
+            <div class="mb-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">remember me</label>
+                </div>
+
+                <a href="{{ route('password.request') }}" class="text-xs text-blue-500">Forgot your password?</a>
             </div>
             {{-- submit button --}}
             <button type="submit" class="btn">Login</button>

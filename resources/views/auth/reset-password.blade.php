@@ -1,19 +1,12 @@
 <x-layout>
-    <h1 class="title">Register</h1>
+    <h1 class="title">Reset your password</h1>
 
     <div class="mx-auto max-w-screen-sm card">
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('password.update') }}" method="POST">
             @csrf
 
-            {{-- username --}}
-            <div class="mb-4">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" value="{{ old('username') }}"
-                    class="input @error('username') !ring-red-500 @enderror">
-                @error('username')
-                    <p class="error">{{ $message }}</p>
-                @enderror
-            </div>
+            <input type="hidden" name="token" value="{{ $token }}">
+
             {{-- email --}}
             <div class="mb-4">
                 <label for="email">Email</label>
@@ -38,13 +31,9 @@
                 <input type="password" name="password_confirmation" id="password_confirmation"
                     class="input @error('password') !ring-red-500 @enderror">
             </div>
-            {{-- subscribe --}}
-            <div class="mb-4 flex items-center gap-2">
-                <input type="checkbox" name="subscribe" id="subscribe">
-                <label for="subscribe">Subscribe to our newsletter</label>
-            </div>
+
             {{-- submit button --}}
-            <button type="submit" class="btn">Register</button>
+            <button type="submit" class="btn">Reset password</button>
         </form>
     </div>
 
